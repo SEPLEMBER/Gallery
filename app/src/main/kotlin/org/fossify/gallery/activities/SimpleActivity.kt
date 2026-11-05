@@ -2,9 +2,11 @@ package org.fossify.gallery.activities
 
 import android.database.ContentObserver
 import android.net.Uri
+import android.os.Bundle // <-- ДОБАВЛЕНО: для переопределения onCreate
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
 import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.FLAG_SECURE // <-- ДОБАВЛЕНО: импорт флага безопасности
 import androidx.appcompat.app.AlertDialog
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.dialogs.FilePickerDialog
@@ -19,6 +21,13 @@ import org.fossify.gallery.extensions.updateDirectoryPath
 import org.fossify.gallery.helpers.getPermissionsToRequest
 
 open class SimpleActivity : BaseSimpleActivity() {
+
+    // <-- ДОБАВЛЕНО: Переопределяем onCreate, чтобы применить FLAG_SECURE ко всем активностям приложения
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Запрещает скриншоты, запись экрана и скрывает содержимое в меню недавних приложений
+        window.addFlags(FLAG_SECURE)
+    }
 
     private var dialog: AlertDialog? = null
 
